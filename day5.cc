@@ -41,17 +41,42 @@ bool contains_bad_pair(string& str) {
   return false;
 }
 
+bool contains_nonoverlapping_pair(string& str) {
+  for (size_t i = 0; i < str.size() - 2; i++) {
+    string pattern = str.substr(i, 2);
+    string remaining_str = str.substr(i + 2);
+    if (contains(remaining_str, pattern)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool contains_repeating_letter(string& str) {
+  for (size_t i = 0; i < str.size() - 2; i++) {
+    if (str.at(i) == str.at(i + 2)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 int main() {
   string filename;
-  cout << "Enter filename: " << endl;
+  cout << "Enter filename: ";
   cin >> filename;
   ifstream file(filename);
   string line;
-  int nice_count = 0;
+  int p1_nice_count = 0;
+  int p2_nice_count = 0;
   while (getline(file, line)) {
     if (vowel_count(line) >= 3 && contains_twice_in_a_row(line) && !contains_bad_pair(line)) {
-      nice_count++;
+      p1_nice_count++;
+    } 
+    if (contains_nonoverlapping_pair(line) && contains_repeating_letter(line)) {
+      p2_nice_count++;
     } 
   }
-  cout << "Nice Count: " << nice_count << endl;
+  cout << "P1 nice count: " << p1_nice_count << endl;
+  cout << "P2 nice count: " << p2_nice_count << endl;
 } 
