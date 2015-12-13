@@ -33,12 +33,18 @@ bool contains_twice_in_a_row(string& str) {
   return false;
 }
 
-bool contains_bad_pair(string& str) {
-  if (contains(str, "ab")) return true;
-  if (contains(str, "cd")) return true;
-  if (contains(str, "pq")) return true;
-  if (contains(str, "xy")) return true;
+bool string_contains(string& str, vector<string>& keys) {
+  for (auto& k : keys) {
+    if (str.find(k) != string::npos) {
+      return true;
+    }
+  }
   return false;
+}
+
+bool contains_bad_pair(string& str) {
+  vector<string> bad_pairs = {"ab", "cd", "pq", "xy"};
+  return string_contains(str, bad_pairs);
 }
 
 bool contains_nonoverlapping_pair(string& str) {
